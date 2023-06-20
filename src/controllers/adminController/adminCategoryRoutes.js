@@ -4,10 +4,12 @@ const { CategoryModel } = require('../../models/index');
 
 const router = express.Router();
 
+// Admin Create Category Route
   router.post('/admin/create-category', adminAuthn, async (req, res) => {
 
     try {
       const { name } = req.body;
+
         // Create a new Category
       const newCategory = await CategoryModel.create({ name });
       if(!newCategory){
@@ -25,11 +27,13 @@ const router = express.Router();
     }
   });
 
+  // Admin Update Category Route
   router.post('/admin/update-category', adminAuthn, async (req, res) => {
 
     try {
       const { body } = req;
       const { id } = body;
+
       // Update Category
       const updatedCategory = await CategoryModel.update( body, { 
         where:{
@@ -50,10 +54,12 @@ const router = express.Router();
 
   });
 
+  // Admin Delete Category Route
   router.post('/admin/delete-category', adminAuthn, async (req, res) => {
 
     try {
       const { id } = req.body;
+
       // Delete Category
       const deletedCategory = await CategoryModel.update({
           deleted: true
@@ -75,9 +81,11 @@ const router = express.Router();
 
   });
 
+  // Admin Get all Category Route
   router.get('/admin/get-allcategories', adminAuthn, async (req, res) => {
 
     try {
+
       // Get all Categories
       const allCategories = await CategoryModel.findAll({
         deleted: false,

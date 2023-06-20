@@ -4,10 +4,12 @@ const { ProductModel } = require('../../models/index');
 
 const router = express.Router();
 
+// User Create Product Route
   router.post('/user/create-product', userAuthn, async (req, res) => {
 
     try {
-      const { name, categoryId ,price, description } = req.body;  
+      const { name, categoryId ,price, description } = req.body;
+
       // Create a new Product
       const newProduct = await ProductModel.create({name, categoryId ,price, description});
       if(!newProduct){
@@ -25,11 +27,13 @@ const router = express.Router();
     }
   });
 
+  // User Update Product Route
   router.post('/user/update-product', userAuthn, async (req, res) => {
 
     try {
       const { body } = req;
       const { id } = body;
+
       // Update Product
       const updatedProduct = await ProductModel.update( body, {where:{ id } });
       if(!updatedProduct){
@@ -47,10 +51,12 @@ const router = express.Router();
 
   });
 
+  // User Delete Product Route
   router.post('/user/delete-product', userAuthn, async (req, res) => {
 
     try {
       const { id } = req.body;
+
       // Delete Product
       const deletedProduct = await ProductModel.update({
         deleted: true
@@ -73,9 +79,11 @@ const router = express.Router();
 
   });
 
+  // User Get all Products Route
   router.get('/user/get-allproducts', userAuthn, async (req, res) => {
 
     try {
+
       // Get all Products
       const allProducts = await ProductModel.findAll({
         deleted: false,

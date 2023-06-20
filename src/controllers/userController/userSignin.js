@@ -4,11 +4,12 @@ const jwt = require('jsonwebtoken');
 const localStorage = require('localStorage');
 const { literal, Op } = require('sequelize');
 const { userAuthn } = require('../../auth/authentication');
-const { UserModel, TimeRecordModel, AttendanceModel } = require('../../models/index');
-const { IpConvert_IpCheck, CurrentTime } = require('../../utils/index');
+const { UserModel, TimeRecordModel } = require('../../models/index');
+const { IpConvert_IpCheck } = require('../../utils/index');
 
 const router = express.Router();
 
+// User Login  route
 router.post('/user/login', async (req, res) => {
     try {
 
@@ -39,9 +40,6 @@ router.post('/user/login', async (req, res) => {
         const ipMatchedObj = await IpConvert_IpCheck(clientIP);
         console.log("ip ", ipMatchedObj)
 
-        // Get Login time
-        const timeIn = await CurrentTime();
-        
         // Update time records table against User ID
         let newSession = '';
         if (ipMatchedObj){
@@ -85,25 +83,10 @@ router.post('/user/login', async (req, res) => {
 
   });
   
+  // User Logout  route
   router.post('/user/logout', userAuthn, async (req, res) => {
     try {
         const userId = req.user.user_id;
-
-        const time = await TimeRecordModel.findOne({
-            where: {
-                userId,
-                logoutTime: {
-                    [Op.is]: null
-                }
-            },
-            attributes: ['loginTime']
-        });
-
-        if(!time){
-            res.status(401).json({error: `Couldn't Fetch Time!`})
-        }
-
-        const loginTime = time.loginTime;
 
         // Update time records table against User ID
         const updateSession = await TimeRecordModel.update({

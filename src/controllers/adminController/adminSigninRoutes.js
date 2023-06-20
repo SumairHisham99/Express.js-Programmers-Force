@@ -1,5 +1,4 @@
 const express = require('express');
-// const bcrypt = require('bcrypt');
 const localStorage = require('localStorage');
 const { adminAuthn } = require('../../auth/authentication');
 const jwt = require('jsonwebtoken');
@@ -7,6 +6,7 @@ const { UserModel } = require('../../models/index');
 
 const router = express.Router();
 
+// Super Admin Login Route
 router.post('/super-admin/login', async (req, res) => {
     try {
 
@@ -45,9 +45,10 @@ router.post('/super-admin/login', async (req, res) => {
     }
   });
 
+  // Super Admin Logout Route
   router.post('/super-admin/logout', adminAuthn, async (req, res) => {
     try {
-        const userId = req.user.user_id;
+        // Assign Token Null Value 
         const token = '';
 
         // Remove the token in the headers

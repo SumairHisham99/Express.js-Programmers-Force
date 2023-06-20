@@ -5,6 +5,7 @@ const { UserModel } = require('../../models/index');
 
 const router = express.Router();
 
+  // Create User Route
   router.post('/admin/create-user', adminAuthn,  async (req, res) => {
 
     try {
@@ -30,11 +31,13 @@ const router = express.Router();
     }
   });
 
+  // Update User Route
   router.post('/admin/update-user', adminAuthn, async (req, res) => {
 
     try {
       const { body } = req;
       const { id } = body;
+
       // Update User
       const updateUser = await UserModel.update( body, { 
         where:{
@@ -56,10 +59,12 @@ const router = express.Router();
 
   });
 
+  // Delete User Route
   router.post('/admin/delete-user', adminAuthn, async (req, res) => {
 
     try {
       const { id } = req.body;
+
       // Delete User
       const deletedUser = await UserModel.update({
           deleted: true
@@ -81,9 +86,11 @@ const router = express.Router();
 
   });
 
+  // Get all Users Route
   router.get('/admin/get-allusers', adminAuthn, async (req, res) => {
 
     try {
+      
       // Get all User
       const allUsers = await UserModel.findAll({
         order: [['id','ASC']]

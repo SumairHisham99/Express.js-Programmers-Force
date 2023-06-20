@@ -4,11 +4,13 @@ const { IpModel } = require('../../models/index');
 
 const router = express.Router();
 
+// Admin Create IP Route
   router.post('/admin/create-ip', adminAuthn, async (req, res) => {
 
     try {
       const { ip_address, floor, location } = req.body;
-        // Create a new IP
+
+      // Create a new IP
       const newIp = await IpModel.create({ ipAddress: ip_address, floor, location });
       if(!newIp){
         res.status(401).json({ error: 'Error While Creating IP Adress!' });
@@ -25,11 +27,13 @@ const router = express.Router();
     }
   });
 
+  // Admin Update IP Route
   router.post('/admin/update-ip', adminAuthn, async (req, res) => {
 
     try {
       const { body } = req;
       const { id } = body;
+
       // Update IP
       const updatedIp = await IpModel.update( body, { 
         where:{
@@ -51,10 +55,12 @@ const router = express.Router();
 
   });
 
+  // Admin Delete IP Route
   router.post('/admin/delete-ip', adminAuthn, async (req, res) => {
 
     try {
       const { id } = req.body;
+      
       // Delete IP
       const deletedIp = await IpModel.update({
           deleted: true
@@ -76,9 +82,11 @@ const router = express.Router();
 
   });
 
+  // Admin Get all IP Route
   router.get('/admin/get-allip', adminAuthn, async (req, res) => {
 
     try {
+
       // Get all IP's
       const allip = await IpModel.findAll({
         deleted: false,
