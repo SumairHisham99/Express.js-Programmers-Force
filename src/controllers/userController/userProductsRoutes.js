@@ -8,10 +8,10 @@ const router = express.Router();
   router.post('/user/create-product', userAuthn, async (req, res) => {
 
     try {
-      const { name, categoryId ,price, description } = req.body;
+      const { body } = req;
 
       // Create a new Product
-      const newProduct = await ProductModel.create({name, categoryId ,price, description});
+      const newProduct = await ProductModel.create(body);
       if(!newProduct){
         res.status(401).json({ error: 'Error While Inserting Product!' });
 

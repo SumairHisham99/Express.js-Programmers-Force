@@ -5,17 +5,19 @@ const { UserModel } = require('../../models/index');
 
 const router = express.Router();
 
-  // Create User Route
-  router.post('/admin/create-user', adminAuthn,  async (req, res) => {
+  // Register User Route
+  router.post('/admin/register-user', adminAuthn,  async (req, res) => {
 
     try {
-      const { name, email, password, role } = req.body;
-  
+      const { body } = req;
+      console.log(body)
       // Hash the password
-      const hashedPassword = await bcrypt.hash(password, 10);
-  
+      const hashedPassword = await bcrypt.hash(body.password, 10);
+
+      body.password = hashedPassword;
+
       // Create a new User
-      const newUser = await UserModel.create({ name, email, password: hashedPassword, role });
+      const newUser = await UserModel.create(body);
       if(!newUser){
         res.status(401).json({ error: 'Error While Creating User!' });
 

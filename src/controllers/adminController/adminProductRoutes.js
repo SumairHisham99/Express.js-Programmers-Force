@@ -4,14 +4,14 @@ const { ProductModel } = require('../../models/index');
 
 const router = express.Router();
 
-  // Admin Create Product Route
-  router.post('/admin/create-product', adminAuthn, async (req, res) => {
+  // Admin Register Product Route
+  router.post('/admin/register-product', adminAuthn, async (req, res) => {
 
     try {
-      const { name, categoryId ,price, description } = req.body;
+      const { body } = req;
       
       // Create a new Product
-      const newProduct = await ProductModel.create({name, categoryId ,price, description});
+      const newProduct = await ProductModel.create(body);
       if(!newProduct){
         res.status(401).json({ error: 'Error While Inserting Product!' });
 

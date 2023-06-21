@@ -4,14 +4,14 @@ const { CategoryModel } = require('../../models/index');
 
 const router = express.Router();
 
-// Admin Create Category Route
-  router.post('/admin/create-category', adminAuthn, async (req, res) => {
+// Admin Register Category Route
+  router.post('/admin/register-category', adminAuthn, async (req, res) => {
 
     try {
-      const { name } = req.body;
+      const { body } = req;
 
         // Create a new Category
-      const newCategory = await CategoryModel.create({ name });
+      const newCategory = await CategoryModel.create(body);
       if(!newCategory){
         res.status(401).json({ error: 'Error While Creating Category!' });
 

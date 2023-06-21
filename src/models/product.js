@@ -13,7 +13,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     categoryId: {
       type: DataTypes.INTEGER,
-      allowNull: true,
+      allowNull: false,
       references: {
         model: 'category',
         key: 'id',

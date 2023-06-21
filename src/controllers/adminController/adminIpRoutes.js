@@ -4,14 +4,14 @@ const { IpModel } = require('../../models/index');
 
 const router = express.Router();
 
-// Admin Create IP Route
-  router.post('/admin/create-ip', adminAuthn, async (req, res) => {
+// Admin Register IP Route
+  router.post('/admin/register-ip', adminAuthn, async (req, res) => {
 
     try {
-      const { ip_address, floor, location } = req.body;
+      const { body } = req;
 
       // Create a new IP
-      const newIp = await IpModel.create({ ipAddress: ip_address, floor, location });
+      const newIp = await IpModel.create(body);
       if(!newIp){
         res.status(401).json({ error: 'Error While Creating IP Adress!' });
 

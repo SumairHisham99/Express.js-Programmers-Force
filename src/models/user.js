@@ -31,7 +31,7 @@ module.exports = (sequelize, Sequelize) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
       enum: ['user','admin']
     },
     enabled: {
